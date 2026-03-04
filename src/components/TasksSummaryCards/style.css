@@ -1,0 +1,21 @@
+.tasks-summary-cards {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.tasks-summary-cards .card {
+    flex: 1;
+    text-align: center;
+}
+
+.tasks-summary-cards .card__title {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.tasks-summary-cards .card__value {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+}
