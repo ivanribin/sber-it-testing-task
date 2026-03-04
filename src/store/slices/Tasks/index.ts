@@ -4,13 +4,13 @@ import { TRootState } from "@store/index";
 import { ITask } from "@domains/Task";
 
 interface ITasksSliceState {
-    tasks: Map<ITask["id"], ITask>;
+    tasks: Record<ITask["id"], ITask>;
     isLoading: boolean;
     error?: string;
 }
 
 const initialState: ITasksSliceState = {
-    tasks: new Map(),
+    tasks: {},
     isLoading: false,
 };
 
@@ -19,22 +19,24 @@ export const TasksSlice = createSlice({
     initialState,
     reducers: {
         addTask: (state, action: PayloadAction<ITask>) => {
-            state.tasks.set(action.payload.id, action.payload);
+            state.tasks = {
+                ...state.tasks,
+                [action.payload.id]: action.payload,
+            };
         },
         updateTask: (state, action: PayloadAction<ITask>) => {
-            if (!state.tasks.has(action.payload.id)) {
-                console.error("Task with this id not exist!");
+            if (!state.tasks[action.payload.id]) return;
 
-                return;
-            }
-
-            state.tasks.set(action.payload.id, action.payload);
+            state.tasks = {
+                ...state.tasks,
+                [action.payload.id]: action.payload,
+            };
         },
         deleteTask: (state, action: PayloadAction<ITask["id"]>) => {
-            state.tasks.delete(action.payload);
+            delete state.tasks[action.payload];
         },
         clearTasks: (state) => {
-            state.tasks.clear();
+            state.tasks = {};
         },
     },
     extraReducers: (builder) => {
@@ -47,8 +49,8 @@ export const TasksSlice = createSlice({
                 fetchTasks.fulfilled,
                 (state, action: PayloadAction<ITask[]>) => {
                     state.isLoading = false;
-                    action.payload.forEach((task) =>
-                        state.tasks.set(task.id, task),
+                    action.payload.forEach(
+                        (task) => (state.tasks[task.id] = task),
                     );
                 },
             )
@@ -64,7 +66,7 @@ export const TasksSlice = createSlice({
                 fetchTask.fulfilled,
                 (state, action: PayloadAction<ITask>) => {
                     state.isLoading = false;
-                    state.tasks.set(action.payload.id, action.payload);
+                    state.tasks[action.payload.id] = action.payload;
                 },
             )
             .addCase(fetchTask.rejected, (state, action) => {
@@ -78,9 +80,15 @@ export const { addTask, updateTask, deleteTask, clearTasks } =
     TasksSlice.actions;
 
 export const selectAllTasks = (state: TRootState) =>
-    Array.from(state.tasks.tasks.values());
+    Object.values(state.tasks.tasks);
 
 export const selectTaskById = (id: string) => (state: TRootState) =>
-    state.tasks.tasks.get(id);
+    state.tasks.tasks[id] || null;
+
+export const selectTasksIsLoading = (state: TRootState): boolean =>
+    state.tasks.isLoading;
+
+export const selectTasksError = (state: TRootState): string | undefined =>
+    state.tasks.error;
 
 export default TasksSlice.reducer;

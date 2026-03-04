@@ -3,7 +3,19 @@ import { ITasksStore } from "@domains/TasksStore";
 import { ITask } from "@domains/Task";
 
 class TasksMockStore implements ITasksStore, ITaskStoreMethodsForSimulation {
-    private tasks = new Map<string, ITask>();
+    private tasks: Map<string, ITask>;
+
+    constructor(initTasks?: ITask[]) {
+        this.tasks = new Map();
+
+        if (!initTasks) {
+            return;
+        }
+
+        initTasks.forEach((task: ITask) => {
+            this.tasks.set(task.id, task);
+        });
+    }
 
     public add(task: ITask) {
         this.tasks.set(task.id, task);
