@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchTask, fetchTasks } from "./thunks";
 import { TRootState } from "@store/index";
+import { fetchTasks } from "./thunks";
 import { ITask } from "@domains/Task";
 
 interface ITasksSliceState {
@@ -55,21 +55,6 @@ export const TasksSlice = createSlice({
                 },
             )
             .addCase(fetchTasks.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload as string;
-            })
-            .addCase(fetchTask.pending, (state) => {
-                state.isLoading = true;
-                state.error = undefined;
-            })
-            .addCase(
-                fetchTask.fulfilled,
-                (state, action: PayloadAction<ITask>) => {
-                    state.isLoading = false;
-                    state.tasks[action.payload.id] = action.payload;
-                },
-            )
-            .addCase(fetchTask.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload as string;
             });
