@@ -31,11 +31,11 @@ export interface INavigationPathData {
 export const navigationPathsData: INavigationPathData[] = [
     {
         ...paths.TASKS,
-        label: "Tasks List",
+        label: "Tasks",
     },
     {
         ...paths.STATISTIC,
-        label: "Tasks Statistic",
+        label: "Statistic",
     },
 ];
 

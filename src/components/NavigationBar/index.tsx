@@ -5,7 +5,7 @@ import "./style.css";
 
 const NavigationBar = (): ReactElement => {
     return (
-        <nav className="navigation-bar card">
+        <nav className="navigation-bar">
             {navigationPathsData.map((item: INavigationPathData) => (
                 <NavLink
                     key={item.id}

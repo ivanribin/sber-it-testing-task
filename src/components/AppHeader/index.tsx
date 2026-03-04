@@ -1,4 +1,5 @@
 import NavigationBar from "@components/NavigationBar";
+import ToggleSimulationButton from "@components/ToggleSimulationButton";
 import { ReactElement } from "react";
 import "./style.css";
 
@@ -9,7 +10,7 @@ const AppHeader = (): ReactElement => {
                 <NavigationBar />
             </div>
             <div className="app-header__right">
-                {/* Future buttons / icons */}
+                <ToggleSimulationButton />
             </div>
         </header>
     );
