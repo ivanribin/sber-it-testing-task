@@ -1,0 +1,25 @@
+.navigation-bar {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background-color: var(--color-card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.navigation-bar .button {
+    padding: var(--spacing-xs) var(--spacing-md);
+    transition: all 0.2s ease;
+    color: var(--color-text);
+    background-color: transparent;
+}
+
+.navigation-bar .button.active {
+    background-color: var(--color-primary-hover);
+    color: var(--color-background);
+}
+
+.navigation-bar .nav-link {
+    text-decoration: none;
+}

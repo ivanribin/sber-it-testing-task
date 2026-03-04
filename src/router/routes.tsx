@@ -22,6 +22,23 @@ export const paths = {
     },
 };
 
+export interface INavigationPathData {
+    id: string;
+    path: string;
+    label: string;
+}
+
+export const navigationPathsData: INavigationPathData[] = [
+    {
+        ...paths.TASKS,
+        label: "Tasks List",
+    },
+    {
+        ...paths.STATISTIC,
+        label: "Tasks Statistic",
+    },
+];
+
 const routes: RouteObject[] = [
     {
         ...paths.HOME,

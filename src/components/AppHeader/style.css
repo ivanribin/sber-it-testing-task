@@ -1,0 +1,25 @@
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-card-bg);
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+}
+
+.app-header__left {
+    display: flex;
+    align-items: center;
+}
+
+.app-header__right {
+    display: flex;
+    align-items: center;
+    min-width: 50px;
+}
