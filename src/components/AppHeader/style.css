@@ -8,9 +8,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
     background-color: var(--color-card-bg);
     box-shadow: var(--shadow-md);
     z-index: 2;
+    overflow-y: hidden;
+    overflow-x: auto;
 }
 
 .app-header__left {
@@ -21,4 +24,5 @@
 .app-header__right {
     display: flex;
     align-items: center;
+    gap: var(--spacing-sm);
 }

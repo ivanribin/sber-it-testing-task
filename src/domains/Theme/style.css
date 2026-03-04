@@ -9,6 +9,7 @@
     --color-text: #111827;
     --color-text-muted: #6b7280;
 
+    --font-size-xsm: 0.8rem;
     --font-size-sm: 1.5rem;
     --font-size-md: 1.6rem;
     --font-size-lg: 1.7rem;
@@ -95,6 +96,7 @@ body {
     cursor: pointer;
     font-size: var(--font-size-md);
     transition: background-color 0.2s;
+    text-wrap: nowrap;
 }
 
 .button-primary {

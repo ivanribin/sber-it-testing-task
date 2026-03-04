@@ -145,6 +145,17 @@ class TasksMockAggregator implements ITasksAggregator {
         return this.isRunning;
     }
 
+    public getIntervalBetweenEvents(): number {
+        return this.intervalBetweenEvents;
+    }
+
+    public setIntervalBetweenEvents(intervalBetweenEvents: number): void {
+        this.intervalBetweenEvents = intervalBetweenEvents;
+
+        this.stop();
+        this.start();
+    }
+
     public subscribe(callback: (event: TTaskEvent) => void) {
         return this.events.subscribe(callback);
     }
