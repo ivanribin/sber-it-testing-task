@@ -12,7 +12,7 @@ import {
     TTaskEvent,
 } from "@domains/TasksAggregator";
 
-const DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS: number = 2000;
+const DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS: number = 1000;
 
 const eventsRandomConfig: TWeightedOption<TaskEventTypes>[] = [
     { value: TaskEventTypes.CREATED, probability: 0.2 },
@@ -71,7 +71,7 @@ class TasksMockAggregator implements ITasksAggregator {
 
         const updatedTask: ITask = {
             ...randomTaskFromStore,
-            status: taskStatuses[
+            status: availableStatuses[
                 Math.floor(Math.random() * availableStatuses.length)
             ],
         };
@@ -79,7 +79,7 @@ class TasksMockAggregator implements ITasksAggregator {
         await this.store.update(updatedTask);
         this.events.emit({
             type: TaskEventTypes.UPDATED,
-            task: randomTaskFromStore,
+            task: updatedTask,
         });
 
         console.info(`[TASK UPDATED] :`, updatedTask);

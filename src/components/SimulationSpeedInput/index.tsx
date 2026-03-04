@@ -3,24 +3,26 @@ import { ChangeEvent, ReactElement } from "react";
 import "./style.css";
 
 const SPEED_LABELS = ["Slow", "Normal", "Fast"];
-const SECONDS_IN_MILLISECONDS_MULTIPLIER = 1000;
+const SPEED_IN_MILLISECONDS_MULTIPLIER = 500;
 const MAX_SPEED = 3;
 const MIN_SPEED = 1;
 const STEP = 1;
 
 const SimulationSpeedInput = (): ReactElement => {
-    const {
-        intervalBetweenEvents: speed,
-        updateIntervalBetweenEvents: setSpeed,
-    } = useSimulation();
+    const { intervalBetweenEvents, updateIntervalBetweenEvents } =
+        useSimulation();
 
     const sliderValue =
-        MAX_SPEED - Math.floor(speed / SECONDS_IN_MILLISECONDS_MULTIPLIER) + 1;
+        MAX_SPEED -
+        Math.floor(intervalBetweenEvents / SPEED_IN_MILLISECONDS_MULTIPLIER) +
+        1;
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const value = Number(event.target.value);
 
-        setSpeed((MAX_SPEED - value + 1) * SECONDS_IN_MILLISECONDS_MULTIPLIER);
+        updateIntervalBetweenEvents(
+            (MAX_SPEED - value + 1) * SPEED_IN_MILLISECONDS_MULTIPLIER,
+        );
     };
 
     return (
