@@ -30,10 +30,6 @@ const useTasks = (): IUseTasksReturn => {
         dispatch(fetchTasks()).unwrap().catch(console.error);
     }, [dispatch, tasks.length]);
 
-    useEffect(() => {
-        console.log("REDUX TASKS: ", tasks);
-    }, [tasks]);
-
     return {
         tasks,
         isLoading,

@@ -2,6 +2,7 @@ import mockTasks from "./meta";
 import IdService from "@services/IdService";
 import TasksMockStore from "@api/TasksMockStore";
 import EventEmitter from "@services/EventEmitter";
+import RandomService, { TWeightedOption } from "@services/RandomService";
 import { ITask, taskStatuses, TaskStatuses } from "@domains/Task";
 import { ITasksStore } from "@domains/TasksStore";
 import {
@@ -12,6 +13,12 @@ import {
 } from "@domains/TasksAggregator";
 
 const DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS: number = 2000;
+
+const eventsRandomConfig: TWeightedOption<TaskEventTypes>[] = [
+    { value: TaskEventTypes.CREATED, probability: 0.2 },
+    { value: TaskEventTypes.UPDATED, probability: 0.6 },
+    { value: TaskEventTypes.DELETED, probability: 0.2 },
+];
 
 class TasksMockAggregator implements ITasksAggregator {
     private store: ITasksStore & ITaskStoreMethodsForSimulation;
@@ -36,69 +43,81 @@ class TasksMockAggregator implements ITasksAggregator {
         this.isRunning = true;
     }
 
+    private async createEvent(): Promise<void> {
+        const newTask: ITask = {
+            id: IdService.generateUniqueId(),
+            status: TaskStatuses.CREATED,
+        };
+
+        await this.store.add(newTask);
+        this.events.emit({
+            type: TaskEventTypes.CREATED,
+            task: newTask,
+        });
+
+        console.info(`[TASK CREATED] :`, newTask);
+    }
+
+    private async updateEvent(): Promise<void> {
+        const randomTaskFromStore: ITask | null = await this.store.getRandom();
+
+        if (!randomTaskFromStore) {
+            return;
+        }
+
+        const availableStatuses: TaskStatuses[] = taskStatuses.filter(
+            (status) => status !== randomTaskFromStore.status,
+        );
+
+        const updatedTask: ITask = {
+            ...randomTaskFromStore,
+            status: taskStatuses[
+                Math.floor(Math.random() * availableStatuses.length)
+            ],
+        };
+
+        await this.store.update(updatedTask);
+        this.events.emit({
+            type: TaskEventTypes.UPDATED,
+            task: randomTaskFromStore,
+        });
+
+        console.info(`[TASK UPDATED] :`, updatedTask);
+    }
+
+    private async deleteEvent(): Promise<void> {
+        const randomTaskIdFromStore: string | null =
+            await this.store.getRandomId();
+
+        if (!randomTaskIdFromStore) {
+            return;
+        }
+
+        await this.store.delete(randomTaskIdFromStore);
+        this.events.emit({
+            type: TaskEventTypes.DELETED,
+            taskId: randomTaskIdFromStore,
+        });
+
+        console.info(`[TASK DELETED] by id:`, randomTaskIdFromStore);
+    }
+
     private async simulate(): Promise<void> {
-        const actions = Object.values(TaskEventTypes);
-        const action = actions[Math.floor(Math.random() * actions.length)];
-
-        switch (action) {
+        switch (RandomService.getRandomWeighted(eventsRandomConfig)) {
             case TaskEventTypes.CREATED: {
-                const newTask: ITask = {
-                    id: IdService.generateUniqueId(),
-                    status: TaskStatuses.CREATED,
-                };
-
-                await this.store.add(newTask);
-                this.events.emit({
-                    type: TaskEventTypes.CREATED,
-                    task: newTask,
-                });
-
-                console.info(`[TASK CREATED] :`, newTask);
+                await this.createEvent();
 
                 break;
             }
 
             case TaskEventTypes.UPDATED: {
-                const randomTaskFromStore: ITask | null =
-                    await this.store.getRandom();
-
-                if (!randomTaskFromStore) {
-                    return;
-                }
-
-                const updatedTask: ITask = {
-                    ...randomTaskFromStore,
-                    status: taskStatuses[
-                        Math.floor(Math.random() * taskStatuses.length)
-                    ],
-                };
-
-                await this.store.update(updatedTask);
-                this.events.emit({
-                    type: TaskEventTypes.UPDATED,
-                    task: randomTaskFromStore,
-                });
-
-                console.info(`[TASK UPDATED] :`, updatedTask);
+                await this.updateEvent();
 
                 break;
             }
 
             case TaskEventTypes.DELETED: {
-                const randomTaskIdFromStore: string | null =
-                    await this.store.getRandomId();
-
-                if (!randomTaskIdFromStore) {
-                    return;
-                }
-
-                await this.store.delete(randomTaskIdFromStore);
-                this.events.emit({
-                    type: TaskEventTypes.DELETED,
-                    taskId: randomTaskIdFromStore,
-                });
-
-                console.info(`[TASK DELETED] by id:`, randomTaskIdFromStore);
+                await this.deleteEvent();
 
                 break;
             }
