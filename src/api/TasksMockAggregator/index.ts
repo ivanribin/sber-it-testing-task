@@ -127,4 +127,6 @@ class TasksMockAggregator implements ITasksAggregator {
     }
 }
 
-export default TasksMockAggregator;
+const tasksMockAggregator = new TasksMockAggregator();
+
+export default tasksMockAggregator;
