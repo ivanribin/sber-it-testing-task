@@ -1,6 +1,7 @@
 import TasksPage from "@pages/Tasks";
 import NotFoundPage from "@pages/NotFound";
 import StatisticPage from "@pages/Statistic";
+import ErrorBoundary from "@components/ErrorBoundary";
 import { Navigate, type RouteObject } from "react-router";
 
 export const paths = {
@@ -46,11 +47,19 @@ const routes: RouteObject[] = [
     },
     {
         ...paths.TASKS,
-        element: <TasksPage />,
+        element: (
+            <ErrorBoundary>
+                <TasksPage />
+            </ErrorBoundary>
+        ),
     },
     {
         ...paths.STATISTIC,
-        element: <StatisticPage />,
+        element: (
+            <ErrorBoundary>
+                <StatisticPage />
+            </ErrorBoundary>
+        ),
     },
     {
         ...paths.NOT_FOUND,

@@ -1,3 +1,4 @@
 .application-layout .content {
     padding-top: var(--header-height);
+    min-height: 100vh;
 }

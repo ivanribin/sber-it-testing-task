@@ -11,14 +11,14 @@ const StatisticPage = () => {
 
     if (isLoading) {
         return (
-            <div className="page">
+            <div className="page full-content-height">
                 <LoaderBlock label="Loading tasks..." />
             </div>
         );
     }
     if (error) {
         return (
-            <div className="page">
+            <div className="page full-content-height">
                 <DummyBlock label={`Error on loading tasks: ${error}`} />
             </div>
         );
@@ -26,7 +26,7 @@ const StatisticPage = () => {
 
     if (!tasks.length) {
         return (
-            <div className="page">
+            <div className="page full-content-height">
                 <DummyBlock label={`No tasks available`} />;
             </div>
         );
