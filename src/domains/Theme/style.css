@@ -9,10 +9,10 @@
     --color-text: #111827;
     --color-text-muted: #6b7280;
 
-    --font-size-sm: 0.875rem;
-    --font-size-md: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
+    --font-size-sm: 1.5rem;
+    --font-size-md: 1.6rem;
+    --font-size-lg: 1.7rem;
+    --font-size-xl: 3rem;
 
     --spacing-xs: 4px;
     --spacing-sm: 8px;
@@ -41,6 +41,37 @@ body {
     color: var(--color-text);
     background-color: var(--color-background);
     line-height: 1.5;
+}
+
+.page.with-content {
+    padding: var(--spacing-lg);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+
+    animation: page-showing 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes page-showing {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page .title {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    margin-bottom: var(--spacing-md);
 }
 
 .container {

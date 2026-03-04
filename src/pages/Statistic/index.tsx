@@ -1,9 +1,12 @@
 import useTasks from "@hooks/useTasks";
 import DummyBlock from "@components/DummyBlock";
-import TaskDetails from "@components/TaskDetails";
 import LoaderBlock from "@components/LoaderBlock";
+import TaskStatusBar from "@components/TaskStatusBar";
+import TaskStatusPie from "@components/TaskStatusPie";
+import TasksSummaryCards from "@components/TasksSummaryCards";
+import "./style.css";
 
-const TasksPage = () => {
+const StatisticPage = () => {
     const { tasks, isLoading, error } = useTasks();
 
     if (isLoading) {
@@ -13,7 +16,6 @@ const TasksPage = () => {
             </div>
         );
     }
-
     if (error) {
         return (
             <div className="page">
@@ -25,20 +27,22 @@ const TasksPage = () => {
     if (!tasks.length) {
         return (
             <div className="page">
-                <DummyBlock label="No tasks available" />
+                <DummyBlock label={`No tasks available`} />;
             </div>
         );
     }
 
     return (
-        <div className="page container with-content task-list">
-            <h1 className="title">Tasks List</h1>
+        <div className="statistic-page page with-content container">
+            <h1 className="title">Task Statistics</h1>
 
-            {tasks.map((task) => (
-                <TaskDetails key={task.id} task={task} />
-            ))}
+            <TasksSummaryCards tasks={tasks} />
+            <div className="statistic-page__charts">
+                <TaskStatusPie tasks={tasks} />
+                <TaskStatusBar tasks={tasks} />
+            </div>
         </div>
     );
 };
 
-export default TasksPage;
+export default StatisticPage;
