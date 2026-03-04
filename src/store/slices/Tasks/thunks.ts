@@ -15,18 +15,3 @@ export const fetchTasks = createAsyncThunk(
         }
     },
 );
-
-export const fetchTask = createAsyncThunk(
-    "tasks/fetchTask",
-    async (id: string, { rejectWithValue }) => {
-        try {
-            const task = await tasksMockAggregator.getTask(id);
-
-            return task;
-        } catch (error: unknown) {
-            return rejectWithValue(
-                `Task ${id} not found: ${(error as Error).message}`,
-            );
-        }
-    },
-);

@@ -1,0 +1,5 @@
+.task-status-bar {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+}

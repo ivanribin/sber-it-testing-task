@@ -1,0 +1,35 @@
+.statistic-page__charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.card {
+    background-color: var(--color-card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.card h3 {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+}
+
+.task-status-pie,
+.tasks-status-bar {
+    padding: var(--spacing-sm);
+}
+
+@media (max-width: 1200px) {
+    .statistic-page__charts {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+}

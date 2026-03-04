@@ -1,0 +1,22 @@
+.animated-number {
+    height: 1.2em;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.animated-number__wrapper {
+    display: flex;
+    flex-direction: column;
+    transform: translateY(0);
+    
+}
+
+.animated-number__wrapper.animate {
+    transform: translateY(-50%);
+}
+
+.animated-number__wrapper span {
+    height: 1.2em;
+    display: flex;
+    align-items: center;
+}
