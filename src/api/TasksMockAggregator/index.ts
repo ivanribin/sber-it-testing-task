@@ -16,6 +16,7 @@ const DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS: number = 2000;
 class TasksMockAggregator implements ITasksAggregator {
     private store: ITasksStore & ITaskStoreMethodsForSimulation;
     private events: EventEmitter<TTaskEvent>;
+    private isRunning: boolean;
     private simulationIntervalId: NodeJS.Timeout | null;
     private intervalBetweenEvents: number;
 
@@ -32,6 +33,7 @@ class TasksMockAggregator implements ITasksAggregator {
             () => this.simulate().catch(console.error),
             intervalBetweenEvents,
         );
+        this.isRunning = true;
     }
 
     private async simulate(): Promise<void> {
@@ -110,6 +112,7 @@ class TasksMockAggregator implements ITasksAggregator {
 
         clearInterval(this.simulationIntervalId);
         this.simulationIntervalId = null;
+        this.isRunning = false;
     }
 
     public start(): void {
@@ -121,6 +124,7 @@ class TasksMockAggregator implements ITasksAggregator {
             () => this.simulate().catch(console.error),
             this.intervalBetweenEvents,
         );
+        this.isRunning = true;
     }
 
     public getTasks(): Promise<ITask[]> {
@@ -129,8 +133,27 @@ class TasksMockAggregator implements ITasksAggregator {
 
     public getTask(id: string): Promise<ITask> {
         const task = this.store.get(id);
-        if (!task) return Promise.reject("Task not found");
+
+        if (!task) {
+            return Promise.reject("Task not found");
+        }
+
         return Promise.resolve(task);
+    }
+
+    public getIsRunning(): boolean {
+        return this.isRunning;
+    }
+
+    public getIntervalBetweenEvents(): number {
+        return this.intervalBetweenEvents;
+    }
+
+    public setIntervalBetweenEvents(intervalBetweenEvents: number): void {
+        this.intervalBetweenEvents = intervalBetweenEvents;
+
+        this.stop();
+        this.start();
     }
 
     public subscribe(callback: (event: TTaskEvent) => void) {

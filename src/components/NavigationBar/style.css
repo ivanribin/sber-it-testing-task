@@ -1,0 +1,22 @@
+.navigation-bar {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    border-radius: var(--radius-md);
+}
+
+.navigation-bar .button {
+    padding: var(--spacing-xs) var(--spacing-md);
+    transition: all 0.2s ease;
+    color: var(--color-text);
+    background-color: transparent;
+}
+
+.navigation-bar .button.active {
+    background-color: var(--color-primary-hover);
+    color: var(--color-background);
+}
+
+.navigation-bar .nav-link {
+    text-decoration: none;
+}

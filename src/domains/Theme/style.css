@@ -9,10 +9,11 @@
     --color-text: #111827;
     --color-text-muted: #6b7280;
 
+    --font-size-xsm: 0.8rem;
     --font-size-sm: 1.5rem;
     --font-size-md: 1.6rem;
     --font-size-lg: 1.7rem;
-    --font-size-xl: 3rem;
+    --font-size-xl: 2rem;
 
     --spacing-xs: 4px;
     --spacing-sm: 8px;
@@ -27,6 +28,8 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+
+    --header-height: 5rem;
 }
 
 * {
@@ -93,6 +96,7 @@ body {
     cursor: pointer;
     font-size: var(--font-size-md);
     transition: background-color 0.2s;
+    text-wrap: nowrap;
 }
 
 .button-primary {

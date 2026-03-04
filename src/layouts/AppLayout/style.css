@@ -1,0 +1,3 @@
+.application-layout .content {
+    padding-top: var(--header-height);
+}

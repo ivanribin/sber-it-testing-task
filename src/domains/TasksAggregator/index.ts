@@ -24,6 +24,11 @@ export interface ITasksAggregator {
     subscribe: (callback: (event: TTaskEvent) => void) => () => boolean;
     getTasks(): Promise<ITask[]>;
     getTask(id: string): Promise<ITask>;
+    getIsRunning(): boolean;
+    getIntervalBetweenEvents(): number;
+    setIntervalBetweenEvents(intervalBetweenEvents: number): void;
+    start: () => void;
+    stop: () => void;
 }
 
 export interface ITaskStoreMethodsForSimulation {
