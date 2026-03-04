@@ -1,3 +1,4 @@
+import mockTasks from "./meta";
 import IdService from "@services/IdService";
 import TasksMockStore from "@api/TasksMockStore";
 import EventEmitter from "@services/EventEmitter";
@@ -19,9 +20,10 @@ class TasksMockAggregator implements ITasksAggregator {
     private intervalBetweenEvents: number;
 
     constructor(
-        intervalBetweenEvents = DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS,
+        initTasks: ITask[] = mockTasks,
+        intervalBetweenEvents: number = DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS,
     ) {
-        this.store = new TasksMockStore();
+        this.store = new TasksMockStore(initTasks);
         this.events = new EventEmitter<TTaskEvent>();
 
         this.intervalBetweenEvents = intervalBetweenEvents;
@@ -49,6 +51,8 @@ class TasksMockAggregator implements ITasksAggregator {
                     task: newTask,
                 });
 
+                console.info(`[TASK CREATED] :`, newTask);
+
                 break;
             }
 
@@ -60,16 +64,20 @@ class TasksMockAggregator implements ITasksAggregator {
                     return;
                 }
 
-                randomTaskFromStore.status =
-                    taskStatuses[
+                const updatedTask: ITask = {
+                    ...randomTaskFromStore,
+                    status: taskStatuses[
                         Math.floor(Math.random() * taskStatuses.length)
-                    ];
+                    ],
+                };
 
-                await this.store.update(randomTaskFromStore);
+                await this.store.update(updatedTask);
                 this.events.emit({
                     type: TaskEventTypes.UPDATED,
                     task: randomTaskFromStore,
                 });
+
+                console.info(`[TASK UPDATED] :`, updatedTask);
 
                 break;
             }
@@ -87,6 +95,9 @@ class TasksMockAggregator implements ITasksAggregator {
                     type: TaskEventTypes.DELETED,
                     taskId: randomTaskIdFromStore,
                 });
+
+                console.info(`[TASK DELETED] by id:`, randomTaskIdFromStore);
+
                 break;
             }
         }
