@@ -1,3 +1,4 @@
+import AppLayout from "@layouts/AppLayout";
 import ApplicationRoutes from "@router/index";
 import TasksListener from "@components/TasksListener";
 import { BrowserRouter } from "react-router";
@@ -8,7 +9,9 @@ const Application = (): ReactElement => {
     return (
         <TasksListener>
             <BrowserRouter>
-                <ApplicationRoutes />
+                <AppLayout>
+                    <ApplicationRoutes />
+                </AppLayout>
             </BrowserRouter>
         </TasksListener>
     );
