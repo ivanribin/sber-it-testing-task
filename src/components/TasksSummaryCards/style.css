@@ -18,4 +18,13 @@
 .tasks-summary-cards .card__value {
     font-size: var(--font-size-lg);
     font-weight: bold;
+    height: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.tasks-summary-cards .card__value.with-label {
+    gap: 0;
 }

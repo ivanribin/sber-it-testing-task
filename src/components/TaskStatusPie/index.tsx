@@ -2,6 +2,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { ITask, TaskStatuses } from "@domains/Task";
 import { Pie } from "react-chartjs-2";
 import { ReactElement } from "react";
+import "./style.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -35,7 +36,7 @@ const TaskStatusPie = ({ tasks }: ITaskStatusPieProps): ReactElement => {
     return (
         <div className="task-status-pie card">
             <h3>Status Distribution</h3>
-            <Pie data={data} />
+            <Pie data={data} options={{ responsive: true }} />
         </div>
     );
 };

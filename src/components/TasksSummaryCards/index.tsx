@@ -1,3 +1,4 @@
+import AnimatedNumber from "@components/AnimatedNumber";
 import { ITask, TaskStatuses } from "@domains/Task";
 import { ReactElement } from "react";
 import "./style.css";
@@ -23,17 +24,26 @@ const TasksSummaryCards = ({
         <div className="tasks-summary-cards">
             <div className="card">
                 <div className="card__title">Total Tasks</div>
-                <div className="card__value">{total}</div>
+                <div className="card__value">
+                    <AnimatedNumber value={total} />
+                </div>
             </div>
             <div className="card">
                 <div className="card__title">Completed</div>
                 <div className="card__value">
-                    {completed} ({completedPercent}%)
+                    <AnimatedNumber value={completed} />
+                    {`/`}
+                    <span className="card__value with-label">
+                        <AnimatedNumber value={completedPercent} />
+                        {`%`}
+                    </span>
                 </div>
             </div>
             <div className="card">
                 <div className="card__title">In Progress</div>
-                <div className="card__value">{inProgress}</div>
+                <div className="card__value">
+                    <AnimatedNumber value={inProgress} />
+                </div>
             </div>
         </div>
     );

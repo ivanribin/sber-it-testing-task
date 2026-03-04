@@ -9,12 +9,22 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
+import "./style.css";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 interface ITaskStatusBarProps {
     tasks: ITask[];
 }
+
+const barOptions = {
+    responsive: true,
+    plugins: {
+        legend: {
+            display: false,
+        },
+    },
+};
 
 const TaskStatusBar = ({ tasks }: ITaskStatusBarProps): ReactElement => {
     const statusCounts: Record<TaskStatuses, number> = {
@@ -38,19 +48,10 @@ const TaskStatusBar = ({ tasks }: ITaskStatusBarProps): ReactElement => {
         ],
     };
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false,
-            },
-        },
-    };
-
     return (
         <div className="task-status-bar card">
             <h3>Tasks Comparison</h3>
-            <Bar data={data} options={options} />
+            <Bar data={data} options={barOptions} />
         </div>
     );
 };
