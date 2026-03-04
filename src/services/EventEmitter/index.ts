@@ -1,13 +1,13 @@
 class EventEmitter<T> {
     private listeners = new Set<(event: T) => void>();
 
-    subscribe(callback: (event: T) => void): () => void {
+    public subscribe(callback: (event: T) => void): () => boolean {
         this.listeners.add(callback);
 
         return () => this.listeners.delete(callback);
     }
 
-    emit(event: T) {
+    public emit(event: T) {
         this.listeners.forEach((listener) => listener(event));
     }
 }

@@ -1,7 +1,8 @@
+import { ITaskStoreMethodsForSimulation } from "./../../domains/TasksAggregator/index";
 import { ITasksStore } from "@domains/TasksStore";
 import { ITask } from "@domains/Task";
 
-class TasksMockStore implements ITasksStore {
+class TasksMockStore implements ITasksStore, ITaskStoreMethodsForSimulation {
     private tasks = new Map<string, ITask>();
 
     public add(task: ITask) {
@@ -34,24 +35,28 @@ class TasksMockStore implements ITasksStore {
         return currentTask;
     }
 
-    public getRandom(): ITask | null {
-        const tasks: ITask[] = [...this.tasks.values()];
+    public getRandom(): Promise<ITask | null> {
+        return new Promise((resolve) => {
+            const tasks: ITask[] = [...this.tasks.values()];
 
-        if (!tasks.length) {
-            return null;
-        }
+            if (!tasks.length) {
+                resolve(null);
+            }
 
-        return tasks[Math.floor(Math.random() * tasks.length)];
+            resolve(tasks[Math.floor(Math.random() * tasks.length)]);
+        });
     }
 
-    public getRandomId(): string | null {
-        const keys: string[] = [...this.tasks.keys()];
+    public getRandomId(): Promise<string | null> {
+        return new Promise((resolve) => {
+            const keys: string[] = [...this.tasks.keys()];
 
-        if (!keys.length) {
-            return null;
-        }
+            if (!keys.length) {
+                resolve(null);
+            }
 
-        return keys[Math.floor(Math.random() * keys.length)];
+            resolve(keys[Math.floor(Math.random() * keys.length)]);
+        });
     }
 }
 
