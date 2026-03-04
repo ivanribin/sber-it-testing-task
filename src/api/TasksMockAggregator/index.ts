@@ -12,6 +12,14 @@ import {
     TTaskEvent,
 } from "@domains/TasksAggregator";
 
+export interface ITasksMockAggregatorConfig {
+    withInstantlyStart: boolean;
+}
+
+const defaultTasksMockAggregatorConfig: ITasksMockAggregatorConfig = {
+    withInstantlyStart: true,
+};
+
 const DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS: number = 1000;
 
 const eventsRandomConfig: TWeightedOption<TaskEventTypes>[] = [
@@ -30,11 +38,19 @@ class TasksMockAggregator implements ITasksAggregator {
     constructor(
         initTasks: ITask[] = mockTasks,
         intervalBetweenEvents: number = DEFAULT_SIMULATION_EVENTS_INTERVAL_IN_MILLISECONDS,
+        config: ITasksMockAggregatorConfig = defaultTasksMockAggregatorConfig,
     ) {
         this.store = new TasksMockStore(initTasks);
         this.events = new EventEmitter<TTaskEvent>();
 
         this.intervalBetweenEvents = intervalBetweenEvents;
+
+        if (!config.withInstantlyStart) {
+            this.simulationIntervalId = null;
+            this.isRunning = false;
+
+            return;
+        }
 
         this.simulationIntervalId = setInterval(
             () => this.simulate().catch(console.error),

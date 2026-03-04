@@ -1,5 +1,5 @@
 import tasksMockAggregator from "@api/TasksMockAggregator";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export interface IUseSimulationProps {
     isRunning: boolean;
@@ -35,13 +35,6 @@ export const useSimulation = (): IUseSimulationProps => {
             tasksMockAggregator.getIntervalBetweenEvents(),
         );
     };
-
-    useEffect(() => {
-        console.log(
-            "INTERVAL: ",
-            tasksMockAggregator.getIntervalBetweenEvents(),
-        );
-    }, [intervalBetweenEvents]);
 
     return {
         isRunning,
