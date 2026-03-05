@@ -1,0 +1,7 @@
+.toggle-simulation-button.button {
+    background-color: var(--color-success);
+}
+
+.toggle-simulation-button.running {
+    background-color: var(--color-error);
+}

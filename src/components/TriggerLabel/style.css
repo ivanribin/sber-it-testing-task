@@ -1,0 +1,30 @@
+.trigger-label {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    color: var(--color-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    animation: fadeInOut 0.8s ease forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+}

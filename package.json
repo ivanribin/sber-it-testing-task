@@ -1,5 +1,5 @@
 {
-  "name": "react-vite-template",
+  "name": "sber-it-testing-task",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
+    "chart.js": "^4.5.1",
     "path": "^0.12.7",
     "react": "^19.1.0",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "react-router": "^7.4.1",
     "redux": "^5.0.1"
   },
